@@ -1,0 +1,25 @@
+{% extends "embed/base.html" %}
+
+{% block primary_content %}
+<section class="module">
+  <div class="module-content">
+    {% block page_primary_action %}
+      
+    
+    <div class="page_primary_action">
+      <small>Datasets</small>
+      <br>
+      
+      </div>
+      
+    {% endblock %}
+  </div>
+</section>
+{% endblock %}
+
+{% block secondary_content %}
+{{ super() }}
+{% for facet in c.facet_titles %}
+  {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+{% endfor %}
+{% endblock %}
