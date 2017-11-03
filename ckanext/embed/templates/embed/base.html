@@ -5,10 +5,10 @@
   <script type="text/javascript" src="/jquery.js"></script>
 {% endblock %}
 
-{% block subtitle %}{{ _('Data Requests') }}{% endblock %}
+{% block subtitle %}{{ _('Embed') }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active">{% link_for _('Data Requests'), controller='ckanext.datarequests.controllers.ui_controller:DataRequestsUI', action='index' %}</li>
+  <li class="active">{% link_for _('Embed'), controller='ckanext.embed.controllers.ui_controller:EmbedUI', action='index' %}</li>
 {% endblock %}
 
 {% block secondary_content %}
