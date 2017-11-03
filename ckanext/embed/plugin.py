@@ -22,11 +22,8 @@ import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 import actions
 import constants
-import helpers
 import os
 import sys
-# import ckan.plugins as plugins
-# import ckan.plugins.toolkit as toolkit
 
 from functools import partial
 from pylons import config
