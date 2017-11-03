@@ -20,14 +20,9 @@
 import logging
 
 import ckan.lib.base as base
-import ckan.logic as logic
-import ckan.lib.maintain as maintain
-import ckan.lib.search as search
 import ckan.lib.helpers as h
 import ckan.model as model
-from ckan.common import config
 import ckan.plugins as plugins
-import ckan.lib.helpers as helpers
 import ckanext.embed.constants as constants
 import functools
 import re
@@ -43,81 +38,25 @@ tk = plugins.toolkit
 c = tk.c
 
 
-def _get_errors_summary(errors):
-    errors_summary = {}
-
-    for key, error in errors.items():
-        errors_summary[key] = ', '.join(error)
-
-    return errors_summary
-
-
-def _encode_params(params):
-    return [(k, v.encode('utf-8') if isinstance(v, basestring) else str(v))
-            for k, v in params]
-
-
-def url_with_params(url, params):
-    params = _encode_params(params)
-    return url + u'?' + urlencode(params)
-
-
-def search_url(params):
-    url = helpers.url_for(controller='ckanext.embed.controllers.ui_controller:EmbedUI',
-                          action='index')
-    return url_with_params(url, params)
-
-
 class EmbedUI(base.BaseController):
-    
-    def _get_context(self):
-        return {'model': model, 'session': model.Session,
-                'user': c.user, 'auth_user_obj': c.userobj}
 
     def index(self):
-        try:
-            # package search
-            context = {'model': model, 'session': model.Session,
-                       'user': c.user, 'auth_user_obj': c.userobj}
-            data_dict = {
-                'q': '*:*',
-                'facet.field': g.facets,
-                'rows': 4,
-                'start': 0,
-                'sort': 'views_recent desc',
-                'fq': 'capacity:"public"'
-            }
-            query = logic.get_action('package_search')(
-                context, data_dict)
-            c.search_facets = query['search_facets']
-            c.package_count = query['count']
-            c.datasets = query['results']
+        # package search
+        context = {'model': model, 'session': model.Session,
+                    'user': c.user, 'auth_user_obj': c.userobj}
+        organization = str(request.GET.get('organization', None))
+        q = request.GET.get('q', '*:*')
+        print(organization)
+        print(q)
+        data_dict = {
+            'q': q,
+            'facet.field': g.facets,
+            'rows': 4,
+            'start': 0,
+            'sort': 'views_recent desc',
+            'fq': 'organization:'+organization
+        }
 
-            c.facets = query['facets']
-            maintain.deprecate_context_item(
-                'facets',
-                'Use `c.search_facets` instead.')
+        results = tk.get_action(constants.EMBED_INDEX)(context, data_dict)
 
-            c.search_facets = query['search_facets']
-
-            c.facet_titles = {
-                'organization': _('Organizations'),
-                'groups': _('Groups'),
-                'tags': _('Tags'),
-                'res_format': _('Formats'),
-                'license': _('Licenses'),
-            }
-
-        except search.SearchError:
-            c.package_count = 0
-
-        if c.userobj and not c.userobj.email:
-            url = h.url_for(controller='user', action='edit')
-            msg = _('Please <a href="%s">update your profile</a>'
-                    ' and add your email address. ') % url + \
-                _('%s uses your email address'
-                    ' if you need to reset your password.') \
-                % g.site_title
-            h.flash_notice(msg, allow_html=True)
-
-        return base.render('embed/index.html', cache_force=True)
+        return base.render('embed/index.html', extra_vars={'datasets': results.datasets}, cache_force=True)
