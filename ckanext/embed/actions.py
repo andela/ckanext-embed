@@ -115,6 +115,8 @@ def embed_show(context, data_dict):
     try:
         # Call the function to fetch the dataset from core ckan
         dataset = get_core.package_show(context, data_dict)
+        dataset['follower_count'] = get_core.dataset_follower_count(context, data_dict)
+        dataset['activity_stream'] = get_core.package_activity_list_html(context, data_dict)
     except search.SearchError:
         dataset = {}
     
