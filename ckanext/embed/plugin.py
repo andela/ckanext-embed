@@ -2,20 +2,20 @@
 
 # Copyright (c) 2015-2016 CoNWeT Lab., Universidad Politécnica de Madrid
 
-# This file is part of CKAN Data Requests Extension.
+# This file is part of CKAN Embed Extension.
 
-# CKAN Data Requests Extension is free software: you can redistribute it and/or
+# CKAN Embed Extension is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# CKAN Data Requests Extension is distributed in the hope that it will be useful,
+# CKAN Embed Extension is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 
 # You should have received a copy of the GNU Affero General Public License
-# along with CKAN Data Requests Extension. If not, see <http://www.gnu.org/licenses/>.
+# along with CKAN Embed Extension. If not, see <http://www.gnu.org/licenses/>.
 
 import ckan.lib.helpers as h
 import ckan.plugins as p
@@ -25,21 +25,8 @@ import constants
 import os
 import sys
 
-from functools import partial
 from pylons import config
 
-
-def get_config_bool_value(config_name, default_value=False):
-    value = config.get(config_name, default_value)
-    value = value if type(value) == bool else value != 'False'
-    return value
-
-def is_fontawesome_4():
-    if hasattr(h, 'ckan_version'):
-        ckan_version = float(h.ckan_version()[0:3])
-        return ckan_version >= 2.7
-    else:
-        return False
 
 class EmbedPlugin(p.SingletonPlugin):
     p.implements(p.IActions)
@@ -62,7 +49,8 @@ class EmbedPlugin(p.SingletonPlugin):
 
     def get_actions(self):
         additional_actions = {
-            constants.EMBED_INDEX: actions.embed_index
+            constants.EMBED_INDEX: actions.embed_index,
+            constants.EMBED_SHOW: actions.embed_show
         }
         return additional_actions
 
@@ -90,6 +78,11 @@ class EmbedPlugin(p.SingletonPlugin):
         m.connect('embed_index', "/%s" % constants.EMBED_MAIN_PATH,
                   controller='ckanext.embed.controllers.ui_controller:EmbedUI',
                   action='index', conditions=dict(method=['GET']))
+
+        # Single dataset view
+        m.connect('embed_single', "/%s/dataset/{id}" % constants.EMBED_MAIN_PATH,
+                  controller='ckanext.embed.controllers.ui_controller:EmbedUI',
+                  action='show', conditions=dict(method=['GET']))
 
         return m
 
