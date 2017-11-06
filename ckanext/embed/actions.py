@@ -2,33 +2,28 @@
 
 # Copyright (c) 2015-2016 CoNWeT Lab., Universidad Politécnica de Madrid
 
-# This file is part of CKAN Data Requests Extension.
+# This file is part of CKAN Embed Extension.
 
-# CKAN Data Requests Extension is free software: you can redistribute it and/or
+# CKAN Embed Extension is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 
-# CKAN Data Requests Extension is distributed in the hope that it will be useful,
+# CKAN Embed Extension is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 
 # You should have received a copy of the GNU Affero General Public License
-# along with CKAN Data Requests Extension. If not, see <http://www.gnu.org/licenses/>.
+# along with CKAN Embed Extension. If not, see <http://www.gnu.org/licenses/>.
 
 
-import cgi
-import datetime
 import logging
 
-import ckan.logic.action.create as create_core
+import ckan.logic.action.get as get_core
 import ckan.plugins as plugins
-from ckan.plugins import toolkit as tk
-
-import ckan.logic as logic
 import ckan.lib.search as search
-from ckan.common import request, _, g, c
+from ckan.common import _, c
 
 c = plugins.toolkit.c
 log = logging.getLogger(__name__)
@@ -79,23 +74,9 @@ def embed_index(context, data_dict):
     :rtype: dict
     '''
 
-    model = context['model']
-
-    # Filter by state
-    closed = data_dict.get('closed', None)
-
-    # Free text filter
-    q = data_dict.get('q', None)
-
-    # Sort. By default, datasets are returned in the order they are created
-    desc = False
-    if data_dict.get('sort', None) == 'desc':
-        desc = True
     try:
         # Call the function to fetch the datasets
-        query = logic.get_action('package_search')(
-            context, data_dict
-        )
+        query = get_core.package_search(context, data_dict)
         c.search_facets = query['search_facets']
         c.package_count = query['count']
         c.datasets = query['results']
@@ -111,3 +92,30 @@ def embed_index(context, data_dict):
         c.package_count = 0
 
     return c
+
+
+def embed_show(context, data_dict):
+    '''
+    Action to retrieve the information of a dataset. The only required
+    parameter is the id of the dataset. A NotFound exception will be
+    risen if the given id is not found.
+
+    :param id: the id or name of the dataset
+    :type id: string
+
+    :param use_default_schema: use default package schema instead of
+        a custom schema defined with an IDatasetForm plugin (default: False)
+    :type use_default_schema: bool
+    :param include_tracking: add tracking information to dataset and
+        resources (default: False)
+    :type include_tracking: bool
+    :rtype: dictionary
+    '''
+
+    try:
+        # Call the function to fetch the dataset from core ckan
+        dataset = get_core.package_show(context, data_dict)
+    except search.SearchError:
+        dataset = {}
+    
+    return dataset
