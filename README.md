@@ -6,6 +6,30 @@ CKAN extension that allows organizations to embed their datasets published on a 
 
 You create an iframe on your website and provide the url from CKAN with the required parameters to fetch the relevant datasets and display them on your website.
 
+The iframe will include a search bar to help users search within the organization's datasets from the organization's website.
+
+### Embedding
+
+To fetch the datasets from an organization to be displayed on their website in an iframe, use the following code snippet:
+```
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://<ckan-url>/embed/?organization=<organization-id>" >
+</iframe>
+```
+
+Example: For an organization called `org-x` the snippet would be:
+```
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://<ckan-url>/embed/?organization=org-x">
+</iframe>
+```
+
 ## Installation
 
 Install this extension in your CKAN instance is as easy as install any other CKAN extension.
