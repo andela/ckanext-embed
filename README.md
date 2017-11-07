@@ -1,6 +1,3 @@
-# ckanext-embedder
-Enabling embeds for organizations, groups, and datasets.
-
 # CKAN Embed
 
 CKAN extension that allows organizations to embed their datasets published on a CKAN instance to their website within an iframe.
