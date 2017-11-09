@@ -5,19 +5,23 @@
 
 
 <div id="accordion" role="tablist" aria-multiselectable="true">
+	{% set heading = 1 %}
+	{% set collapse = 1 %}
 	{% for dataset in datasets %}
+
   <div class="card">
-    <div class="card-header" role="tab" id="headingOne">
+    <div class="card-header" role="tab" id="heading{{ heading }}">
       <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-           Title: {{ dataset.title }}
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ collapse }}" aria-expanded="true" aria-controls="collapse{{ collapse }}">
+           {{ dataset.title }}
         </a>
       </h5>
     </div>
-	 <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+
+
+    <div id="collapse{{ collapse }}" class="collapse show" role="tabpanel" aria-labelledby="heading{{ heading }}">
       <div class="card-block">
-      	
-      	Description: {{ dataset.notes }} <br> 
+      	      	Description: {{ dataset.notes }} <br> 
   		State: {{ dataset.state }} <br>
   		Open: {{ dataset.isopen }} <br>
   		URL: <a href="http://127.0.0.1:5000/embed/dataset/{{ dataset.id }}">Link</a>
@@ -25,9 +29,8 @@
       </div>
     </div>
   </div>
+  		{% set heading = heading + 1 %}
+		{% set collapse = collapse + 1 %}
   	{% endfor %}
 </div>
-
-
-
 
