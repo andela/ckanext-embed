@@ -1,9 +1,33 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-{% for dataset in datasets %}
-  Title: {{ dataset.title }} <br>
-  Description: {{ dataset.notes }} <br> 
-  State: {{ dataset.state }} <br>
-  Open: {{ dataset.isopen }} <br>
-  URL: <a href="http://127.0.0.1:5000/embed/dataset/{{ dataset.id }}">Link</a>
-  <br><br>
-{% endfor %}
+
+<div id="accordion" role="tablist" aria-multiselectable="true">
+	{% for dataset in datasets %}
+  <div class="card">
+    <div class="card-header" role="tab" id="headingOne">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+           Title: {{ dataset.title }}
+        </a>
+      </h5>
+    </div>
+	 <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+      <div class="card-block">
+      	
+      	Description: {{ dataset.notes }} <br> 
+  		State: {{ dataset.state }} <br>
+  		Open: {{ dataset.isopen }} <br>
+  		URL: <a href="http://127.0.0.1:5000/embed/dataset/{{ dataset.id }}">Link</a>
+       
+      </div>
+    </div>
+  </div>
+  	{% endfor %}
+</div>
+
+
+
+

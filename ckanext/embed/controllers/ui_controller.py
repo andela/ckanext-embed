@@ -52,7 +52,6 @@ class EmbedUI(base.BaseController):
             'sort': 'views_recent desc',
             'fq': 'organization:'+organization
         }
-
         results = tk.get_action(constants.EMBED_INDEX)(context, data_dict)
 
         return base.render('embed/index.html', extra_vars={'datasets': results.datasets}, cache_force=True)

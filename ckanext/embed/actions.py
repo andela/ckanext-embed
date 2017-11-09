@@ -90,7 +90,6 @@ def embed_index(context, data_dict):
 
     except search.SearchError:
         c.package_count = 0
-
     return c
 
 
