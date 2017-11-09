@@ -1,10 +1,24 @@
 
-Title: {{ dataset.title }} <br>
-Description: {{ dataset.notes }} <br> 
-State: {{ dataset.state }} <br>
-Open: {{ dataset.isopen }} <br>
-URL: <a href="http://127.0.0.1:5000/dataset/{{ dataset.id }}">Link</a> <br>
-Followers: {{ dataset.follower_count }} <br>
-Activty: {{ dataset.activity_stream }} <br>
-<br><br>
-{{ dataset }}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+
+ <div class="card">
+    <div class="card-header" role="tab">
+      <h5 class="mb-0">
+        <p ">
+           {{ dataset.title }}
+        </p>
+      </h5>
+    </div>
+      <div class="card-block">
+      	Description: {{ dataset.notes }} <br> 
+		State: {{ dataset.state }} <br>
+		Open: {{ dataset.isopen }} <br>
+		URL: <a href="http://127.0.0.1:5000/dataset/{{ dataset.id }}">Link</a> <br>
+		Followers: {{ dataset.follower_count }} <br>
+		Activty: {{ dataset.activity_stream }} <br>    
+      </div>
+ 
+  </div>
