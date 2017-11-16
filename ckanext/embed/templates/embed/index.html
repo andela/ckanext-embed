@@ -21,11 +21,11 @@
 
     <div id="collapse{{ collapse }}" class="collapse show" role="tabpanel" aria-labelledby="heading{{ heading }}">
       <div class="card-block">
-      	      	Description: {{ dataset.notes }} <br> 
+      	Description: {{ dataset.notes }} <br> 
   		State: {{ dataset.state }} <br>
   		Open: {{ dataset.isopen }} <br>
-  		URL: <a href="http://127.0.0.1:5000/embed/dataset/{{ dataset.id }}">Link</a>
-       
+  		URL: <a href="/embed/dataset/{{ dataset.id }}">Link</a>
+
       </div>
     </div>
   </div>
@@ -33,4 +33,3 @@
 		{% set collapse = collapse + 1 %}
   	{% endfor %}
 </div>
-
