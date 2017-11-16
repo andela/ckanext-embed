@@ -21,7 +21,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com//ckanext-embed',
+    url='https://github.com/CodeForAfricaLabs/ckanext-embed',
 
     # Author details
     author='''''',

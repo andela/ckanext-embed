@@ -44,7 +44,7 @@ pip install ckanext-embed
 ```
 > **Note**: If you prefer, you can also download the source code and install the extension manually. To do so, execute the following commands:
 > ```
-> $ git clone https://github.com/andela/ckanext-embed.git
+> $ git clone https://github.com/CodeForAfricaLabs/ckanext-embed.git
 > $ cd ckanext-embed
 > $ python setup.py install
 > ```
