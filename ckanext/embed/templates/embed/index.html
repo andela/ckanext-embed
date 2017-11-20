@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+
+<!-- Container -->
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col">
+      <div class="input-group">
+          <input type="text" id="searchQuery" class="form-control" placeholder="Search for datasets" aria-label="Search for datasets">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="button">Search</button>
+          </span>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div id="accordion" class="col" role="tablist" aria-multiselectable="true">
+      {% set heading = 1 %}
+      {% set collapse = 1 %}
+      
+      {% if datasets|length >= 1 %}
+
+          {{ datasets|length }} found.
+
+          {% for dataset in datasets %}
+          
+            <div class="card">
+              <div class="card-header" role="tab" id="heading{{ heading }}">
+                <h5 class="mb-0">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ collapse }}" aria-expanded="true" aria-controls="collapse{{ collapse }}">
+                    {{ dataset.title }}
+                  </a>
+                </h5>
+              </div>
+          
+          
+              <div id="collapse{{ collapse }}" class="collapse show" role="tabpanel" aria-labelledby="heading{{ heading }}">
+                <div class="card-block">
+                  Description: {{ dataset.notes }} <br> 
+                  State: {{ dataset.state }} <br>
+                  Open: {{ dataset.isopen }} <br>
+                  URL: <a href="/embed/dataset/{{ dataset.id }}">Link</a>
+          
+                </div>
+              </div>
+            </div>
+              {% set heading = heading + 1 %}
+              {% set collapse = collapse + 1 %}
+          
+              {% endfor %}
+          
+    </div>
+
+      {% else %}
+
+        <h3> No datasets found </h3>
+      
+      {% endif %}
+
+  </div>
+
+</div>
+<!-- End of container -->
+
+<script type="text/javascript">
+  
+    document.getElementById('searchQuery').onkeydown = function(e){
+     if(e.keyCode == 13){
+      location = location.href + '&q=' + document.getElementById('searchQuery').value;
+     }
+    };
+  
+</script>
