@@ -59,4 +59,24 @@ sudo service apache2 restart
 ```
 * That's All!
 
+## Manual Testing
+
+After the extension is successfully installed on a running CKAN instance:
+
+* Create an organization and add public datasets to it
+
+* Create an iframe on another site or html page as follows:
+```
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://<ckan-url>/embed/?organization=<organization-name>">
+</iframe>
+```
+>**Note**: The `<organization-name>` is the one that appears on the organization url
+
+* If everything is set up successfully, the datasets you created should appear within the iframe
+
+
 **Note:** When creating a PR that includes code changes, please, ensure your new code is tested. No PR will be merged until the Travis CI system marks it as valid.
