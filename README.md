@@ -76,7 +76,15 @@ After the extension is successfully installed on a running CKAN instance:
 ```
 >**Note**: The `<organization-name>` is the one that appears on the organization url
 
-* If everything is set up successfully, the datasets you created should appear within the iframe
+* If everything is set up successfully, the datasets you created should appear within the iframe as shown below
+
+### Screenshots
+
+View of list of datasets:
+![View of list of datasets:](https://user-images.githubusercontent.com/8082197/33073006-8e3f6704-ced2-11e7-960a-5b13af8365fe.png)
+
+View of a single dataset's details:
+![View of a single dataset's details](https://user-images.githubusercontent.com/8082197/33073022-986f1cec-ced2-11e7-9212-3318f697954e.png)
 
 
 **Note:** When creating a PR that includes code changes, please, ensure your new code is tested. No PR will be merged until the Travis CI system marks it as valid.
