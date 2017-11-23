@@ -10,16 +10,22 @@
 
   <body>
       <!-- Container -->
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding: 10px">
 
         <div class="row">
           <div class="col">
-            <div class="input-group">
-                <input type="text" id="searchQuery" class="form-control" placeholder="Search for datasets" aria-label="Search for datasets">
+            <form method="get">
+              <div class="input-group">
+                <input type="hidden" id="organization" name="organization" value="">
+                <input type="text" class="form-control" name="q" autocomplete="off" placeholder="Search for datasets" aria-label="Search for datasets">
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Search</button>
+                  <button class="btn btn-secondary" type="submit" value="Search"> Search </button>
+                </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="submit" value="Search"> Back </button>
                 </span>
               </div>
+            </form>
           </div>
         </div>
 
@@ -77,16 +83,17 @@
 
       </div>
       <!-- End of container -->
-
       <script type="text/javascript">
-        
-          document.getElementById('searchQuery').onkeydown = function(e){
-          if(e.keyCode == 13){
-            location = location.href + '&q=' + document.getElementById('searchQuery').value;
-          }
-          };
-        
+        /*
+        Get the organization name from the url set in the iframe
+        and set it in the form
+        to be used to send the get requests
+        */
+        (function(){
+          var url = new URL(window.location.href);
+          var organization = url.searchParams.get("organization");
+          document.getElementById('organization').value = organization;
+        })();
       </script>
-
   </body>
 </html>
