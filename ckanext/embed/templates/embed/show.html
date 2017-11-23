@@ -1,72 +1,60 @@
-<!DOCTYPE html>
-<html>
+{% extends "embed/base.html" %}
 
-    <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link rel="stylesheet" href="/style.css">
-        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    </head>
+{% block content %}
 
-    <body>
-        <div class="container-fluid">
+    <div class="card">
+        <div class="card-header" role="tab">
+        <h5 class="mb-0">
+            <p>
+            <a class="btn btn-outline-primary" role="button" onclick="window.history.back(); location.reload;">Back</a> &nbsp;
+            {{ dataset.title }}
+            </p>
+        </h5>
+        </div>
+        <div class="card-block">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="resources-tab" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="false">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Activity</a>
+                </li>
+            </ul>
 
-            <div class="card">
-                <div class="card-header" role="tab">
-                <h5 class="mb-0">
-                    <p>
-                    <a class="btn btn-outline-primary" role="button" onclick="window.history.back(); location.reload;">Back</a> &nbsp;
-                    {{ dataset.title }}
-                    </p>
-                </h5>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                    <br>
+                    {% if dataset.notes %}
+                        {{ dataset.notes }} <br> <br>
+                    {% else %}
+                        <i>This dataset has no description</i> <br> <br>
+                    {% endif %}
+
+                    <b> State: </b> {{ dataset.state }} <br>
+                    <b> Created: </b>{{ h.render_datetime(dataset.metadata_created, with_hours=True) }} <br>
+                    <b> Last Updated: </b> {{ h.render_datetime(dataset.metadata_modified, with_hours=True) }} <br>
+                    <b> Followers: </b> {{ dataset.follower_count }} <br>
+                    <b> License:</b> <a href="{{ dataset.license_url }}"> {{ dataset.license_title }} </a>
                 </div>
-                <div class="card-block">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="resources-tab" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="false">Resources</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Activity</a>
-                        </li>
-                    </ul>
 
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
-                            <br>
-                            {% if dataset.notes %}
-                                {{ dataset.notes }} <br> <br>
-                            {% else %}
-                                <i>This dataset has no description</i> <br> <br>
-                            {% endif %}
-
-                            <b> State: </b> {{ dataset.state }} <br>
-                            <b> Followers: </b> {{ dataset.follower_count }} <br>
-                            <b> License:</b> <a href="{{ dataset.license_url }}"> {{ dataset.license_title }} </a>
-                        </div>
-                        <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
-                            {% for resource in dataset.resources%}
-                                Name: {{ resource.name }}<br>
-                                Description: {{ resource.description }}<br>
-                                URL: <a href="{{ resource.url }}">Link</a><br>
-                                Format: {{ resource.format }}<br>
-                                <br>
-                            {% endfor %}
-                        </div>
-                        <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
-                            {{ dataset.activity_stream }}
-                        </div>
-
-                    </div>
-
+                <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
+                    {% for resource in dataset.resources%}
+                        Name: {{ resource.name }}<br>
+                        Description: {{ resource.description }}<br>
+                        URL: <a href="{{ resource.url }}">Link</a><br>
+                        Format: {{ resource.format }}<br>
+                        <br>
+                    {% endfor %}
+                </div>
+                
+                <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                    {{ dataset.activity_stream }}
                 </div>
 
             </div>
         </div>
-
-    </body>
-
-</html>
+    </div>
+{% endblock %}
