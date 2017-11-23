@@ -39,33 +39,39 @@ c = tk.c
 class EmbedUI(base.BaseController):
 
     def index(self):
-        # package search
-        context = {'model': model, 'session': model.Session}
-        organization = str(request.GET.get('organization', None))
-        q = request.GET.get('q', '*:*')
+        try:
+            # package search
+            context = {'model': model, 'session': model.Session}
+            organization = str(request.GET.get('organization', None))
+            q = request.GET.get('q', '*:*')
 
-        data_dict = {
-            'q': q,
-            'facet.field': g.facets,
-            'rows': 4,
-            'start': 0,
-            'sort': 'views_recent desc',
-            'fq': 'organization:'+organization
-        }
-        results = tk.get_action(constants.EMBED_INDEX)(context, data_dict)
+            data_dict = {
+                'q': q,
+                'facet.field': g.facets,
+                'rows': 4,
+                'start': 0,
+                'sort': 'views_recent desc',
+                'fq': 'organization:'+organization
+            }
+            results = tk.get_action(constants.EMBED_INDEX)(context, data_dict)
 
-        return base.render('embed/index.html', extra_vars={'datasets': results.datasets}, cache_force=True)
+            return base.render('embed/index.html', extra_vars={'datasets': results.datasets}, cache_force=True)
+        except:
+            return base.render('embed/error.html')            
 
     def show(self, id):
-        data_dict = {'id': id}
-        context = {'model': model, 'session': model.Session}
+        try:
+            data_dict = {'id': id}
+            context = {'model': model, 'session': model.Session}
 
-        if not data_dict['id']:
-            raise tk.ValidationError(tk._('Dataset ID has not been included'))
+            if not data_dict['id']:
+                raise tk.ValidationError(tk._('Dataset ID has not been included'))
 
-        # Get the dataset
-        result = tk.get_action(constants.EMBED_SHOW)(context, data_dict)
-        if not result:
-            raise tk.ObjectNotFound(tk._('Dataset %s not found in the data base') % id)
+            # Get the dataset
+            result = tk.get_action(constants.EMBED_SHOW)(context, data_dict)
+            if not result:
+                raise tk.ObjectNotFound(tk._('Dataset %s not found in the data base') % id)
 
-        return base.render('embed/show.html', extra_vars={'dataset': result}, cache_force=True)
+            return base.render('embed/show.html', extra_vars={'dataset': result}, cache_force=True)
+        except:
+            return base.render('embed/error.html')
