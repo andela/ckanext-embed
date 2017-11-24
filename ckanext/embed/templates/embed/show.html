@@ -40,7 +40,7 @@
                     <b> License:</b> <a href="{{ dataset.license_url }}"> {{ dataset.license_title }} </a>
                 </div>
 
-                <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
+                <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab" style="padding: 10px">
                     {% for resource in dataset.resources%}
                         <h4>{{ resource.name }}</h4><br>
                         <i>{{ resource.description }}</i><br>
@@ -50,7 +50,7 @@
                     {% endfor %}
                 </div>
 
-                <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+                <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab" style="padding: 10px">
                     {{ dataset.activity_stream }}
                 </div>
 
