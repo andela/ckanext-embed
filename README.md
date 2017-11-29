@@ -4,30 +4,38 @@ CKAN extension that allows organizations to embed their datasets published on a 
 
 ## How it works
 
-You create an iframe on your website and provide the url from CKAN with the required parameters to fetch the relevant datasets and display them on your website.
+You create an empty div on your website and attach a script that includes the url from CKAN with the required parameters to fetch the relevant datasets and display them on your website.
 
 The iframe will include a search bar to help users search within the organization's datasets from the organization's website.
 
+>**Note**: The extension uses [Pym.js](http://blog.apps.npr.org/pym.js/) for responsive embeds.
+
 ### Embedding
 
-To fetch the datasets from an organization to be displayed on their website in an iframe, use the following code snippet:
+To fetch the datasets from an organization to be displayed on their website in a division, use the following code snippet:
 ```
-<iframe
-  width="600"
-  height="450"
-  frameborder="0" style="border:0"
-  src="https://<ckan-url>/embed/?organization=<organization-id>" >
-</iframe>
+  <div id="example"> </div> <!-- Where the iframe will be rendered -->
+
+  <!-- At the end of the body --->
+  <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
+  <script>
+      var pymParent = new pym.Parent('example', 'https://<ckan-url>/embed/?organization=<organization-name>');
+      pymParent.sendWidth();
+  </script>
+
 ```
 
 Example: For an organization called `org-x` the snippet would be:
 ```
-<iframe
-  width="600"
-  height="450"
-  frameborder="0" style="border:0"
-  src="https://<ckan-url>/embed/?organization=org-x">
-</iframe>
+  <div id="example"> </div> <!-- Where the iframe will be rendered -->
+
+  <!-- At the end of the body --->
+  <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
+  <script>
+      var pymParent = new pym.Parent('example', 'https://<ckan-url>/embed/?organization=org-x');
+      pymParent.sendWidth();
+  </script>
+
 ```
 
 ## Installation
@@ -65,18 +73,21 @@ After the extension is successfully installed on a running CKAN instance:
 
 * Create an organization and add public datasets to it
 
-* Create an iframe on another site or html page as follows:
+* Create an empty div with an id to be passed into the script as follows:
 ```
-<iframe
-  width="600"
-  height="450"
-  frameborder="0" style="border:0"
-  src="https://<ckan-url>/embed/?organization=<organization-name>">
-</iframe>
+  <div id="example"> </div> <!-- Where the iframe will be rendered -->
+
+  <!-- At the end of the body --->
+  <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
+  <script>
+      var pymParent = new pym.Parent('example', 'https://<ckan-url>/embed/?organization=<organization-name>');
+      pymParent.sendWidth();
+  </script>
+
 ```
 >**Note**: The `<organization-name>` is the one that appears on the organization url
 
-* If everything is set up successfully, the datasets you created should appear within the iframe as shown below
+* If everything is set up successfully, the datasets you created should appear within the iframe as shown below and is should be responsive
 
 ### Screenshots
 
