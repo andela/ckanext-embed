@@ -20,7 +20,6 @@ To fetch the datasets from an organization to be displayed on their website in a
   <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
   <script>
       var pymParent = new pym.Parent('example', 'https://<ckan-url>/embed/?organization=<organization-name>');
-      pymParent.sendWidth();
   </script>
 
 ```
@@ -33,7 +32,6 @@ Example: For an organization called `org-x` the snippet would be:
   <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
   <script>
       var pymParent = new pym.Parent('example', 'https://<ckan-url>/embed/?organization=org-x');
-      pymParent.sendWidth();
   </script>
 
 ```
@@ -81,7 +79,6 @@ After the extension is successfully installed on a running CKAN instance:
   <script type="text/javascript" src="https://pym.nprapps.org/pym.v1.min.js"></script>
   <script>
       var pymParent = new pym.Parent('example', 'https://<ckan-url>/embed/?organization=<organization-name>');
-      pymParent.sendWidth();
   </script>
 
 ```
