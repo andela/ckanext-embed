@@ -97,5 +97,11 @@ View of list of datasets:
 View of a single dataset's details:
 ![View of a single dataset's details](https://user-images.githubusercontent.com/8082197/33073022-986f1cec-ced2-11e7-9212-3318f697954e.png)
 
+View of a single dataset's resources:
+![View of a single dataset's resources](https://user-images.githubusercontent.com/8082197/33211055-d0d36c3e-d12d-11e7-9f16-ac41c3d2a203.png)
+
+View of a single dataset's activity:
+![View of a single dataset's activity](https://user-images.githubusercontent.com/8082197/33200010-dcec9592-d103-11e7-87f6-d1f538995d10.png)
+
 
 **Note:** When creating a PR that includes code changes, please, ensure your new code is tested. No PR will be merged until the Travis CI system marks it as valid.
