@@ -1,0 +1,34 @@
+.label, .badge {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #ffffff;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    background-color: #999999;
+}
+
+.label {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;    
+}
+
+.label[data-format=PDF], .label[data-format*=PDF] {
+    background-color: #e0051e;
+}
+
+.label[data-format=JSON], .label[data-format*=JSON] {
+    background-color: #ef7100;
+}
+
+.label[data-format=XML], .label[data-format*=XML] {
+    background-color: #ef7100;
+}
+
+.label[data-format=CSV], .label[data-format*=CSV] {
+    background-color: #dfb100;
+}

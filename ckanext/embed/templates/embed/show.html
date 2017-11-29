@@ -1,0 +1,70 @@
+{% extends "embed/base.html" %}
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header" role="tab">
+        <h5 class="mb-0">
+            <p>
+            <a class="btn btn-outline-primary" role="button" onclick="window.history.back(); location.reload;">Back</a> &nbsp;
+            {{ dataset.title }}
+            </p>
+        </h5>
+        </div>
+        <div class="card-block">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="resources-tab" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="false">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Activity</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                    <br>
+                    {% if dataset.notes %}
+                        {{ dataset.notes }} <br> <br>
+                    {% else %}
+                        <i>This dataset has no description</i> <br> <br>
+                    {% endif %}
+
+                    <b> State: </b> {{ dataset.state }} <br>
+                    <b> Created: </b>{{ h.render_datetime(dataset.metadata_created, with_hours=True) }} <br>
+                    <b> Last Updated: </b> {{ h.render_datetime(dataset.metadata_modified, with_hours=True) }} <br>
+                    <b> Followers: </b> {{ dataset.follower_count }} <br>
+                    <b> License:</b> <a href="{{ dataset.license_url }}"> {{ dataset.license_title }} </a>
+                </div>
+
+                <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab" style="padding: 10px">
+                    {% for resource in dataset.resources%}
+                        <h4>{{ resource.name }}</h4><br>
+                        <i>{{ resource.description }}</i><br>
+                        URL: <a href="{{ resource.url }}">Link</a><br>
+                        <a href="/embed/dataset/{{ dataset.id }}" class="label" data-format="{{ resource.format }}">{{ resource.format }}</a>
+                        <br>
+                        <hr>
+                    {% endfor %}
+                </div>
+
+                <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab" style="padding: 10px">
+                    {{ dataset.activity_stream }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+    /*
+    Remove all links from the activity tab to remove links to the core CKAN instance from within the iframe
+    */
+        $("#activity a").removeAttr("href");
+    </script>
+{% endblock %}
