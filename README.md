@@ -12,7 +12,7 @@ The iframe will include a search bar to help users search within the organizatio
 
 ### Embedding
 
-To fetch the datasets from an organization to be displayed on their website in a division, use the following code snippet:
+To fetch the datasets from an organization to be displayed on their website in a div, use the following code snippet:
 ```
   <div id="example"> </div> <!-- Where the iframe will be rendered -->
 
